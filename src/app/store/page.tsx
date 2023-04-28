@@ -12,7 +12,7 @@ import Link from 'next/link';
 
 export async function getProducts() {
   const res = await fetch("http://localhost:8080" + "/products/", {
-    // cache: "no-store",
+    cache: "no-store",
   });
   const data = await res.json();
   const resp = data.products;
@@ -58,13 +58,13 @@ export default async function Storepage() {
 
                 {product.tags && (
                   <Typography variant="body2" color="text.primary">
-                    Tags:
                     {product.tags
                       .split(",")
                       .map((tag: string, index: Key | null | undefined) => (
                         <span key={index}>
                           <Chip
                             label={tag.trim()}
+                            color="primary"
                             sx={{
                               marginRight: "0.5rem",
                               marginBottom: "0.5rem",
