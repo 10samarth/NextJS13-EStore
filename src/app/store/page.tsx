@@ -8,7 +8,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea, Chip } from "@mui/material";
 import { Key } from "react";
-import Link from 'next/link';
+import Link from "next/link";
 
 export async function getProducts() {
   const res = await fetch("http://localhost:8080" + "/products/", {
@@ -27,10 +27,10 @@ export default async function Storepage() {
         Products
       </Typography>
       <div className={styles.container}>
-        {products.map((product,index) => (
+        {products.map((product, index) => (
           <Card sx={{ maxWidth: 370 }} key={index}>
             <CardActionArea>
-            <Link href={`store/product/${product.id}`}> 
+              <Link href={`store/product/${product.id}`}>
                 <CardMedia
                   component="img"
                   height="340"
@@ -39,8 +39,8 @@ export default async function Storepage() {
                     "https://cdn.shopify.com/s/files/1/0749/9661/3417/products/gift_card.png?v=1682411646"
                   }
                 />
-                </Link>
-              
+              </Link>
+
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
                   {product.title}

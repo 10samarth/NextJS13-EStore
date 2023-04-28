@@ -1,16 +1,11 @@
 "use client";
-import { Shopify } from "@shopify/shopify-api";
-
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button, CardActionArea, Chip } from "@mui/material";
-import { Key } from "react";
-import Link from "next/link";
+import {  Chip, MenuItem, Select } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import styles from "./page.module.css";
 
 export async function getProductById(productId: any) {
+  console.log(productId);
   const res = await fetch("http://localhost:8080" + "/products/" + productId, {
     cache: "no-store",
   });
@@ -30,32 +25,39 @@ export default async function loadProduct({ params }: any) {
           className={styles.imageStyle}
         />
 
-        <div>
-          <h1>{product.title}</h1>
-          <p>{product.vendor}</p>
-          <p>{product.product_type}</p>
-          <p>{product.body_html}</p>
+        <div className={styles.padding}>
+          <h1 >{product.title}</h1>
+          <p className={styles.padding}> Vendor: {product.vendor}</p>
+          <p className={styles.padding}>{product.product_type}</p>
+          <p className={styles.padding}>{product.body_html}</p>
           {product.tags && (
-            <Typography variant="body2" color="text.primary">
-              Tags:
-              {product.tags
-                .split(",")
-                .map((tag: string, index: Key | null | undefined) => (
-                  <span key={index}>
-                    <Chip
-                      label={tag.trim()}
-                      color="primary"
-                      sx={{
-                        marginRight: "0.5rem",
-                        marginBottom: "0.5rem",
-                        marginTop: "0.5rem",
-                      }}
-                    />
-                    {index !== product.tags.split(",").length - 1 && " "}
-                  </span>
-                ))}
-            </Typography>
+            <div className={styles.padding}>
+              Tags : 
+              {product.tags.split(",").map((tag: string, index: any) => (
+                <span key={index}>
+                  <Chip
+                    label={tag.trim()}
+                    color="primary"
+                    sx={{
+                      marginRight: "0.5rem",
+                      marginBottom: "0.5rem",
+                      marginTop: "0.5rem",
+                    }}
+                  />
+                  {index !== product.tags.split(",").length - 1 && " "}
+                </span>
+              ))}
+            </div>
           )}
+          <div style={{ padding: "5px", margin:"33px" }}>
+            Variants available:
+            <ol style={{ margin:"33px"}}>
+          {product.variants.map((variant: any, index: any) => (
+                <li key={index} >
+                  {`Price: $ ${variant.price}`}
+                </li>
+              ))}</ol>
+          </div>
         </div>
       </div>
     </div>
